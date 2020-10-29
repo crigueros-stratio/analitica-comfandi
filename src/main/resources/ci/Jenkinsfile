@@ -1,0 +1,44 @@
+#!groovy
+package ci
+
+@Library('jenkinsfile-pipeline-sl') _
+
+/*
+	Parameters:
+
+    Mandatory:
+
+	    String domain: your domain in the platform. Default value: ''
+
+	Mandatory in Multi-Tenant environment:
+
+	    String cctModelVersion: command center service descriptor version. I.E. '0.5.0', default value is '' to
+                                keep Hydra compatibility
+	    String cctTenantToPublish: Tenant to deploy the application to. Default value is empty to keep Hydra
+	                               compatibility
+
+    Optional
+
+	    String cctService: service name in command center. Default value: "microservice".
+	    String cctModel: command center model. It belongs to service in cct. Default value: "cicdcd".
+	    String jslave: jenkins slave label to be used to build. Default value: 'jenkins-slave-mvn-jdk11'
+	    String jslaveDeployer: jenskins slave label to be used to deploy. Default value: 'jenkins-slave-deployer'
+        String integrationBranch: Integration branch name when different from develop. Default value: 'develop'
+    	Array disableEnvironmentList: list of environments in which to avoid deploying. Values: 'dev', 'uat' or 'pro'
+    	Boolean continuousDelivery: perform release process without asking. Default value: 'false'
+    	Boolean continuousDeployment: set this variable to true if you want to deploy automatically in production
+    	                              and overrides continuousDelivery var. Default value: 'false'.
+    	Boolean skipDeployToProQuestion: If set to false the deployment to production will be executed without asking.
+    	                                 Default value: 'false'.
+        Boolean failOnFailedFunctionalTest: If true, then build market as failed when it fails functional tests.
+                                            If false, build will marked as Unstable. Default value: 'false'
+        String functionalTestsProfile: Profile suffix to execute functional tests. Default value 'ft'.
+
+*/
+mavenPipeline domain: 'comfandi',
+        disableEnvironmentList: ['uat','pro'],
+        cctTenantToPublish: 'certificationdes',
+        cctModel:'cicdcd-secret-onlypostgres2',
+        cctService: 'microservice',
+        cctModelVersion: '0.5.0'
+

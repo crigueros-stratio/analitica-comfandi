@@ -1,0 +1,27 @@
+project:
+  version: @project.version@
+server:
+  port: ${PORT_APP:8080}
+  servlet:
+    context-path: /@project.artifactId@
+
+management:
+  server:
+    port: ${PORT_METRICS:8081}
+  endpoints:
+    web:
+    base-path: /
+spring:
+  application:
+    name: @project.artifactId@
+  datasource:
+    ## Spring DATASOURCE (DataSourceAutoConfiguration & DataSourceProperties)
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password:
+    driver-class-name: org.postgresql.Driver
+logging:
+  level:
+    org.*: INFO
+    root: INFO
+    org.springframework.cloud.bootstrap.config: INFO
